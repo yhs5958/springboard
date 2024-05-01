@@ -1,0 +1,12 @@
+<html layout:decorate="~{layout}">
+<div layout:fragment="content" class="container h-100 d-inline-block w-100 p-3 my-3" style="width: 120px;">
+		<div>
+			<a class="btn btn-info"  sec:authorize="isAnonymous()" th:href="@{/user/login}">로그인하기</a>
+			<a class="btn btn-danger" sec:authorize="isAnonymous()" th:href="@{@{/user/signup}}">회원가입</a>
+			<a class="btn btn-secondary"  sec:authorize="isAuthenticated()" th:href="@{/user/logout}">로그아웃</a>
+			<a class="btn btn-primary" th:href="@{/question/list}">게시판으로</a>
+		</div>
+					
+		<img class="mt-1"width="50%" src="/images/mainIMG.jpg" />
+</div>
+</html>

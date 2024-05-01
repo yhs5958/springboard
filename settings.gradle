@@ -1,0 +1,4 @@
+rootProject.name = 'sbb'
+
+#statci resource
+spring.mvc.static-path-pattern=/images/**

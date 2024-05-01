@@ -1,0 +1,83 @@
+<html layout:decorate="~{layout}">
+<div layout:fragment="content" class="container my-3">
+    <div class="login-wrapper">
+        <h2>Login</h2>
+        <form method="post" th:action="@{/user/login}" id="login-form">
+			<div th:if="${param.error}">
+				<div class="alert alert-danger">사용자ID 또는 비밀번호를 확인해 주세요.</div>
+			</div>
+			
+			<div class="mb-3 d-flex justify-content-start">
+				<input type="text" name="username" id="username" class="form-control col-4" placeholder="ID">
+			</div>
+
+           	<div class="mb-3">
+				<input type="password" name="password" id="password" class="form-control col-4" placeholder="Password">
+			</div>
+			
+            <label for="usernamec" class="p-3 border border-light"><input class="mr-3" type="checkbox" id="usernamec">ID 저장하기
+            <a th:href="@{/user/signup}" class="ml-3 col-1 btn-primary">회원가입</a> <a href="#" class="ml-2 col-1 btn-primary" onclick="javascript:btn()">계정찾기</a></label><br>
+            <div><button type="submit" class="col-4 mt-2 btn btn-primary">Login</button></div>
+			<a th:href="@{/}" class="col-4 mt-2 btn btn-dark">취소</a>
+        </form>
+    </div>
+</div>
+
+</html>
+
+<script>
+function btn(){alert('구현 예정입니다!');}
+
+	<!--id저장하기 부분 제대로 작동하는지 아직 모르겠음;.-->
+	$(document).ready(function(){
+     
+    var key = getCookie("key");
+    $("#username").val(key); 
+      
+    if($("#username").val() != ""){
+        $("#usernamec").attr("checked", true); 
+    }
+
+    $("#usernamec").change(function(){ 
+        if($("#usernamec").is(":checked")){ 
+            setCookie("key", $("#username").val(), 7); 
+        }else{ 
+            deleteCookie("key");
+        }
+    });
+      
+    
+    $("#username").keyup(function(){ 
+        if($("#usernamec").is(":checked")){ 
+            setCookie("key", $("#username").val(), 7); 
+        }
+    });
+});
+  
+function setCookie(cookieName, value, exdays){
+    var exdate = new Date();
+    exdate.setDate(exdate.getDate() + exdays);
+    var cookieValue = escape(value) + ((exdays==null) ? "" : "; expires=" + exdate.toGMTString());
+    document.cookie = cookieName + "=" + cookieValue;
+}
+  
+function deleteCookie(cookieName){
+    var expireDate = new Date();
+    expireDate.setDate(expireDate.getDate() - 1);
+    document.cookie = cookieName + "= " + "; expires=" + expireDate.toGMTString();
+}
+  
+function getCookie(cookieName) {
+    cookieName = cookieName + '=';
+    var cookieData = document.cookie;
+    var start = cookieData.indexOf(cookieName);
+    var cookieValue = '';
+    if(start != -1){
+        start += cookieName.length;
+        var end = cookieData.indexOf(';', start);
+        if(end == -1)end = cookieData.length;
+        cookieValue = cookieData.substring(start, end);
+    }
+    return unescape(cookieValue);
+}	
+</script>

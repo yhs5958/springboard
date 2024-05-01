@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="ko">
+
+<head>
+	<!-- Required meta tags -->
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+	<!-- Bootstrap CSS -->
+	<link rel="stylesheet" type="text/css" th:href="@{/bootstrap.min.css}">
+	<!-- sbb CSS -->
+	<link rel="stylesheet" type="text/css" th:href="@{/style.css}">
+	<title>접속을 환영합니다!</title>
+</head>
+
+<body class="d-flex flex-column min-vh-100">
+	<!--navbar-->
+	<nav th:replace="~{navbar :: navbarFragment}"></nav>
+	<!-- 기본 템플릿 안에 삽입될 내용 Start -->
+	<th:block layout:fragment="content"></th:block>
+	<!-- 기본 템플릿 안에 삽입될 내용 End -->
+	<!-- Bootstrap JS -->
+	<script th:src="@{/bootstrap.min.js}"></script>
+	<!-- Java Script Start -->
+	<th:block layout:fragment="script"></th:block>
+	<!-- Java Script End -->
+	<footer class="py-5 bg-dark mt-auto" th:replace="~{footer :: footerFragment}"></footer>
+</body>
+
+</html>

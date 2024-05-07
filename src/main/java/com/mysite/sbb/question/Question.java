@@ -44,6 +44,9 @@ public class Question {
 	
 	private LocalDateTime modifyDate;
 	
+	@Column(columnDefinition = "integer default 0", nullable = false)
+	private int view;
+	
 	@ManyToMany
     Set<SiteUser> voter;
 	

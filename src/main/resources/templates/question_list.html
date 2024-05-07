@@ -12,7 +12,7 @@
 				<th style="width:50%">제목</th>
 				<th>글쓴이</th>
 				<th>작성일시</th>
-				<!--<th>조회수</th>-->
+				<th>조회수</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -30,45 +30,60 @@
 		</tbody>
 	</table>
 	
-	<!-- 페이징처리 시작(start) -->
+	<!-- 페이징처리 시작 -->
 	<div th:if="${!paging.isEmpty()}">
 		<ul class="pagination justify-content-center">
-			<li class="page-item" th:classappend="${!paging.hasPrevious} ? 'disabled'">
-				<a class="page-link" href="javascript:void(0)" th:data-page="${paging.number-1}">
-					<span>이전</span>
+			<li class="page-item">
+				<a class="page-link" href="javascript:void(0)" th:data-page="${paging.totalPages-paging.totalPages}">
+					<span>◀◀</span>
 				</a>
 			</li>
-			<li th:each="page: ${#numbers.sequence(1, paging.totalPages-1)}"
+			
+			<li class="page-item" th:classappend="${!paging.hasPrevious} ? 'disabled'">
+				<a class="page-link" href="javascript:void(0)" th:data-page="${paging.number-1}">
+					<span>◀</span>
+				</a>
+			</li>
+			<li th:each="page: ${#numbers.sequence(0, paging.totalPages-1)}"
 				th:if="${page >= paging.number-5 and page <= paging.number+5}"
 				th:classappend="${page == paging.number} ? 'active'" class="page-item">
 				<a th:text="${page}" class="page-link" href="javascript:void(0)" th:data-page="${page}"></a>
 			</li>
 			<li class="page-item" th:classappend="${!paging.hasNext} ? 'disabled'">
 				<a class="page-link" href="javascript:void(0)" th:data-page="${paging.number+1}">
-					<span>다음</span>
+					<span>▶</span>
+				</a>
+			</li>
+			<li class="page-item">
+				<a class="page-link" href="javascript:void(0)" th:data-page="${paging.totalPages-1}">
+					<span>▶▶</span>
 				</a>
 			</li>
 		</ul>
 	</div>
-	<!-- 페이징처리 시작(End) -->
+	<!-- 페이징처리 끝(End) -->
 	
-	<!-- 페이징처리 끝(Start) -->
+	<!-- 검색 -->
 	<form th:action="@{/question/list}" method="get" id="searchForm">
 		<input type="hidden" id="kw" name="kw" th:value="${kw}">
 		<input type="hidden" id="page" name="page" th:value="${paging.number}">
 	</form>
-	<!-- 페이징처리 끝(End) -->
-	
 	 <form class="d-flex justify-content-center">
-	 <div class="col-4">
+	 <div class="col-6">
 		<div class="input-group">
-        	<input type="text" id="search_kw" class="form-control mx-2" th:value="${kw}" placeholder="검색어를 입력해주세요." aria-label="Search">
+			  <select name="languages" id="lang">
+			    <option value="">제목</option>
+			    <option value="">제목+내용</option>
+			    <option value="">댓글</option>
+			  </select>
+        	<input type="text" id="search_kw" class="form-control mx-2" th:value="${kw}"  aria-label="Search">
         	<button class="btn btn-outline-secondary" type="button" id="btn_search">검색</button>
 	 	</div>
 	 </div>	
      </form>
 	
 </div>
+
 <!-- Java Script-->
 <script layout:fragment="script" type='text/javascript'>
 	const page_elements = document.getElementsByClassName("page-link");

@@ -57,6 +57,7 @@ public class QuestionService {
 		return this.questionRepository.findAllByKeyword(kw, pageable);
 	}
 	
+	
     public Question getQuestion(Integer id) {  
         Optional<Question> question = this.questionRepository.findById(id);
         if (question.isPresent()) {

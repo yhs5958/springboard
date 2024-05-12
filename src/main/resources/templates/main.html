@@ -1,4 +1,5 @@
 <html layout:decorate="~{layout}">
+<body onload="printClock()">
 <div layout:fragment="content" class="container h-100 d-inline-block w-100 p-3 my-3" style="width: 120px;">
 		<div>
 			<a class="btn btn-info"  sec:authorize="isAnonymous()" th:href="@{/user/login}">로그인하기</a>
@@ -6,8 +7,44 @@
 			<a class="btn btn-secondary"  sec:authorize="isAuthenticated()" th:href="@{/user/logout}">로그아웃</a>
 			<a class="btn btn-primary" th:href="@{/question/list}">게시판으로</a>
 		</div>
-					
+
+
+	<div class="mt-1" style="border:1px solid #dedede; width:50%; height:120px; line-height:100px; color:#666;font-size:100px; text-align:center;" id="clock">
+	</div>
 		<!--<img class="mt-1"width="50%" src="/images/mainIMG.jpg" />-->
 		<img class="mt-1"width="50%" src="https://github.com/yhs5958/springboard/blob/main/src/main/resources/images/mainIMG.jpg?raw=true" />
+		
 </div>
+</body>					
 </html>
+
+<script>
+function printClock() {
+    
+    var clock = document.getElementById("clock");// 출력할 장소 선택
+    var currentDate = new Date(); // 현재시간
+    var calendar = currentDate.getFullYear() + "-" + (currentDate.getMonth()+1) + "-" + currentDate.getDate() // 현재 날짜
+    var amPm = 'AM'; // 초기값 AM
+    var currentHours = addZeros(currentDate.getHours(),2); 
+    var currentMinute = addZeros(currentDate.getMinutes() ,2);
+    var currentSeconds =  addZeros(currentDate.getSeconds(),2);
+    
+    if(currentHours >= 12){ // 시간이 12보다 클 때 PM으로 세팅, 12를 빼줌.
+    	amPm = 'PM';
+    	currentHours = addZeros(currentHours - 12,2);
+    }
+    clock.innerHTML = currentHours+":"+currentMinute+":"+currentSeconds +" <span style='font-size:50px;'>"+ amPm+"</span>"; //날짜를 출력해 줌
+    setTimeout("printClock()",1000);         // 1초마다 printClock() 함수 호출
+}
+
+function addZeros(num, digit) { // 자릿수 맞춰주기
+	  var zero = '';
+	  num = num.toString();
+	  if (num.length < digit) {
+	    for (i = 0; i < digit - num.length; i++) {
+	      zero += '0';
+	    }
+	  }
+	  return zero + num;
+}	  
+</script>

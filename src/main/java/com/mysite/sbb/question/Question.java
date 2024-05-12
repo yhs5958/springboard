@@ -53,4 +53,5 @@ public class Question {
 	@ManyToMany
 	Set<SiteUser> oppose;
 	
+	private String category;
 }

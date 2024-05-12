@@ -1,8 +1,9 @@
 <html layout:decorate="~{layout}">
 <div layout:fragment="content" class="container my-3">
 	<!-- 질문 -->
-	<h2 class="border-bottom py-2" th:text="${question.subject}"></h2>
-	<div class="card my-3">
+	<h3 class="text-warning bg-secondary text-center" th:text="${question.category}"></h3>
+	<h2 class="border-bottom py-2 text-center" th:text="${question.subject}"></h2>
+	<div class="card my-2">
 		<div class="card-body">
 			<div class="card-text" th:utext="${@commonUtil.markdown(question.content)}"></div>
 			<div class="d-flex justify-content-end">
@@ -18,17 +19,19 @@
 				</div>
 			</div>
 			<div class="my-3">
-				<a href="javascript:void(0);" class="recommend btn btn-sm btn-outline-primary"
+				<a href="javascript:void(0);" class="recommend btn btn-sm btn-outline-primary" style="width: 10%;"
 					th:data-uri="@{|/question/vote/${question.id}|}">
 					추천
 					<span class="badge rounded-pill" th:text="${#lists.size(question.voter)}"></span>
 				</a>
-				<a href="javascript:void(0);" class="recommend2 btn btn-sm btn-outline-dark"
+				<a href="javascript:void(0);" class="recommend2 btn btn-sm btn-outline-dark" style="width: 10%;"
 					th:data-uri="@{|/question/oppose/${question.id}|}">
 					비추천
 					<span class="badge rounded-pill" th:text="${#lists.size(question.oppose)}"></span>
 				</a>
-				<a th:href="@{|/question/modify/${question.id}|}" class="btn btn-sm btn-outline-warning"
+			</div>
+			<div class="d-flex justify-content-end">
+				<a th:href="@{|/question/modify/${question.id}|}" class="btn btn-sm btn-outline-warning mr-1 "
 					sec:authorize="isAuthenticated()"
 					th:if="${question.author != null and #authentication.getPrincipal().getUsername() == question.author.username}"
 					th:text="수정"></a>
@@ -37,11 +40,12 @@
 					th:if="${question.author != null and #authentication.getPrincipal().getUsername() == question.author.username}"
 					th:text="삭제"></a>
 			</div>
+			
 		</div>
 	</div>
-	<!-- 답변의 갯수 표시 -->
-	<h5 class="border-bottom my-3 py-2" th:text="|${#lists.size(question.answerList)}개의 답변이 있습니다.|"></h5>
-	<!-- 답변 반복 시작 -->
+	<!-- 댓글의 갯수 표시 -->
+	<h5 class="border-bottom my-3 py-2" th:text="|댓글 총 ${#lists.size(question.answerList)}개|"></h5>
+	<!-- 댓글 반복 시작 -->
 	<div class="card my-3" th:each="answer : ${question.answerList}">
 		<a th:id="|answer_${answer.id}|"></a>
 		<div class="card-body">
@@ -69,6 +73,8 @@
 					비추천
 					<span class="badge rounded-pill" th:text="${#lists.size(answer.oppose)}"></span>
 				</a>
+				
+				<div class="d-flex justify-content-end">
 				<a th:href="@{|/answer/modify/${answer.id}|}" class="btn btn-sm btn-outline-warning"
 					sec:authorize="isAuthenticated()"
 					th:if="${answer.author != null and #authentication.getPrincipal().getUsername() == answer.author.username}"
@@ -77,11 +83,12 @@
 					class="delete btn btn-sm btn-outline-danger" sec:authorize="isAuthenticated()"
 					th:if="${answer.author != null and #authentication.getPrincipal().getUsername() == answer.author.username}"
 					th:text="삭제"></a>
+				</div>	
 			</div>
 		</div>
 	</div>
-	<!-- 답변 반복 끝  -->
-	<!-- 답변 작성 -->
+	<!-- 댓글 반복 끝  -->
+	<!-- 댓글 작성 -->
 	<form th:action="@{|/answer/create/${question.id}|}" th:object="${answerForm}" method="post" class="my-3">
 		<div th:replace="~{form_errors :: formErrorsFragment}"></div>
 		<textarea sec:authorize="isAnonymous()" disabled th:field="*{content}" class="form-control bg-light"

@@ -20,6 +20,7 @@ public interface QuestionRepository extends JpaRepository<Question, Integer> {
 
 	Page<Question> findAll(Specification<Question> spec, Pageable pageable);
 	
+	
 	@Query("select "
             + "distinct q "
             + "from Question q " 

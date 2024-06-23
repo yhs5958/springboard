@@ -11,8 +11,8 @@ import lombok.Setter;
 @Setter
 public class QuestionForm {
 	
-    @NotBlank(message = "카테고리선택은 필수항목입니다.")
-    private String category;
+    @NotBlank(message = "글 분류는 필수항목입니다.")
+    private String posttype;
     
 	@NotEmpty(message = "제목은 필수 항목입니다.")
 	@Size(max=200)

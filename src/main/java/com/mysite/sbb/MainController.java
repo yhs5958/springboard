@@ -16,7 +16,6 @@ public class MainController {
 		return "main";
 	}
 	
-	//미구현 메뉴 controller
 	@GetMapping("/menu1")
 	@ResponseBody
 	public String menu1() {
@@ -25,11 +24,6 @@ public class MainController {
 	@GetMapping("/menu2")
 	@ResponseBody
 	public String menu2() {
-		return "아직 미구현입니다..ㅠㅠ";
-	}
-	@GetMapping("/menu3")
-	@ResponseBody
-	public String menu3() {
 		return "아직 미구현입니다..ㅠㅠ";
 	}
 		

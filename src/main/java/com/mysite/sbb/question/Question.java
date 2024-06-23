@@ -53,5 +53,6 @@ public class Question {
 	@ManyToMany
 	Set<SiteUser> oppose;
 	
-	private String category;
+	private String posttype;
+	
 }
